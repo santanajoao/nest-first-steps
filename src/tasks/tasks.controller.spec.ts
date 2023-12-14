@@ -24,28 +24,28 @@ describe('TasksController', () => {
   });
 
   it('getAll should return all tasks', async () => {
-    jest.spyOn(service, 'findAll').mockImplementation(async () => taskList);
+    jest.spyOn(service, 'findAll').mockResolvedValue(taskList);
 
     const result = await controller.getAll();
     expect(result).toBe(taskList);
   });
 
   it('create should return the created task', async () => {
-    jest.spyOn(service, 'create').mockImplementation(async () => task);
+    jest.spyOn(service, 'create').mockResolvedValue(task);
 
     const result = await controller.create(createData);
     expect(result.title).toBe(task.title);
   });
 
   it('update should return the updated task', async () => {
-    jest.spyOn(service, 'update').mockImplementation(async () => task);
+    jest.spyOn(service, 'update').mockResolvedValue(task);
 
     const result = await controller.update(1, {});
     expect(result).toBe(task);
   });
 
   it('delete should return nothing', async () => {
-    jest.spyOn(service, 'delete').mockImplementation(async () => undefined);
+    jest.spyOn(service, 'delete').mockResolvedValue(undefined);
 
     const result = await controller.delete(1);
     expect(result).toBeUndefined();
