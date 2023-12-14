@@ -38,6 +38,7 @@ describe('TasksService', () => {
   });
 
   it('update should return de updated task', async () => {
+    jest.spyOn(prismaService.task, 'findUnique').mockResolvedValue(task);
     jest.spyOn(prismaService.task, 'update').mockResolvedValue(task);
 
     const result = await taskService.update(task.id, updateData);
@@ -45,6 +46,7 @@ describe('TasksService', () => {
   });
 
   it('delete should return nothing', async () => {
+    jest.spyOn(prismaService.task, 'findUnique').mockResolvedValue(task);
     jest.spyOn(prismaService.task, 'delete').mockResolvedValue(task);
 
     const result = await taskService.delete(task.id);

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
 import { PrismaModule } from '../prisma/prisma.module';
-import { createData, task, taskList } from '../mocks/task.mock';
+import { createData, task, taskList, updateData } from '../mocks/task.mock';
 
 describe('TasksController', () => {
   let controller: TasksController;
@@ -40,14 +40,14 @@ describe('TasksController', () => {
   it('update should return the updated task', async () => {
     jest.spyOn(service, 'update').mockResolvedValue(task);
 
-    const result = await controller.update(1, {});
+    const result = await controller.update(task.id, updateData);
     expect(result).toBe(task);
   });
 
   it('delete should return nothing', async () => {
     jest.spyOn(service, 'delete').mockResolvedValue(undefined);
 
-    const result = await controller.delete(1);
+    const result = await controller.delete(task.id);
     expect(result).toBeUndefined();
   });
 });
