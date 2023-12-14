@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
-import { Task } from '@prisma/client';
 import { PrismaModule } from '../prisma/prisma.module';
-import { CreateTaskDto } from './dto/create-task.dto';
+import { createData, task, taskList } from '../mocks/task.mock';
 
 describe('TasksController', () => {
   let controller: TasksController;
@@ -25,24 +24,20 @@ describe('TasksController', () => {
   });
 
   it('getAll should return all tasks', async () => {
-    const tasks: Task[] = [{ id: 3, isDone: false, title: 'test' }];
-    jest.spyOn(service, 'findAll').mockImplementation(async () => tasks);
+    jest.spyOn(service, 'findAll').mockImplementation(async () => taskList);
 
     const result = await controller.getAll();
-    expect(result).toBe(tasks);
+    expect(result).toBe(taskList);
   });
 
   it('create should return the created task', async () => {
-    const task: CreateTaskDto = { title: 'test' };
-    const createdTask: Task = { ...task, id: 1, isDone: false };
-    jest.spyOn(service, 'create').mockImplementation(async () => createdTask);
+    jest.spyOn(service, 'create').mockImplementation(async () => task);
 
-    const result = await controller.create(task);
+    const result = await controller.create(createData);
     expect(result.title).toBe(task.title);
   });
 
   it('update should return the updated task', async () => {
-    const task: Task = { title: 'other', id: 1, isDone: false };
     jest.spyOn(service, 'update').mockImplementation(async () => task);
 
     const result = await controller.update(1, {});

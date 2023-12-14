@@ -3,18 +3,11 @@ import { TasksService } from './tasks.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { PrismaService } from '../prisma/prisma.service';
 import { NotFoundException } from '@nestjs/common';
-import { Task } from '@prisma/client';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { createData, updateData, task, taskList } from '../mocks/task.mock';
 
 describe('TasksService', () => {
   let taskService: TasksService;
   let prismaService: PrismaService;
-
-  const createData: CreateTaskDto = { title: 'test title' };
-  const updateData: UpdateTaskDto = { isDone: true };
-  const task: Task = { id: 1, ...createData, isDone: false, ...updateData };
-  const taskList = [task];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
